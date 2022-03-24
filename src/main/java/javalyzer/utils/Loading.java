@@ -62,10 +62,10 @@ public class Loading extends Thread {
 
     @Override
     public void run() {
-        String format = "\r%-40s [%s]";
+        String format = "\r[%s] %s";
         while (!this.isInterrupted) {
             if (this.isRunning) {
-                System.out.printf(format, this.message, this.getNext());
+                System.out.printf(format, this.getNext(), this.message);
             }
             try {
                 Thread.sleep(300);
@@ -76,7 +76,7 @@ public class Loading extends Thread {
 
     public void kill(boolean success) {
         char c = success ? '✓' : 'x';
-        System.out.printf("\r%-40s [%c]\n", this.message, c);
+        System.out.printf("\r[%c] %s\n", c, this.message);
         this.isRunning = false;
     }
 

@@ -27,6 +27,7 @@ package javalyzer.extractors;
 import javalyzer.utils.Constants;
 import javalyzer.utils.Environment;
 import javalyzer.utils.Loading;
+import javalyzer.utils.Writer;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -48,6 +49,9 @@ public abstract class AbstractExtractor implements Extractor {
         this.l.start();
         this.l.load(this.getMessage());
         boolean b = this.process();
+        l.kill(true);
+        l.load(String.format("Writing %s/%s.%s", Environment.v().getOutputFolder(),
+                this.getOutputFileName(), Environment.v().getOutputFormat()));
         this.write();
         this.close(b);
     }
@@ -69,7 +73,7 @@ public abstract class AbstractExtractor implements Extractor {
             myWriter.write(content);
             myWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Writer.v().perror(e.getMessage());
         }
     }
 

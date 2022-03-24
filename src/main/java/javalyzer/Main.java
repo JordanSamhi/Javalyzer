@@ -36,6 +36,7 @@ import javalyzer.options.OutputFormatSetter;
 import javalyzer.utils.CommandLineOptions;
 import javalyzer.utils.Constants;
 import javalyzer.utils.Loading;
+import javalyzer.utils.Writer;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.profiler.StopWatch;
 import soot.PackManager;
@@ -47,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("%s v%s started on %s\n%n", Constants.TOOL_NAME, Constants.VERSION, new Date());
+        Writer.v().pinfo(String.format("%s v%s started on %s", Constants.TOOL_NAME, Constants.VERSION, new Date()));
         StopWatch stopWatch = new StopWatch(Constants.TOOL_NAME);
         stopWatch.start(Constants.TOOL_NAME);
 
@@ -68,7 +69,7 @@ public class Main {
         boolean recognized = si.recognizeFileType(new File(input));
         l.kill(recognized);
         if (!recognized) {
-            System.err.println("Input file not recognized");
+            Writer.v().perror("Input file not recognized");
             System.exit(1);
         }
 
@@ -90,6 +91,6 @@ public class Main {
         l.interrupt();
         stopWatch.stop();
         long elapsedTime = TimeUnit.SECONDS.convert(stopWatch.elapsedTime(), TimeUnit.NANOSECONDS);
-        System.out.printf("Analysis took %d seconds.%n", elapsedTime);
+        Writer.v().pinfo(String.format("Analysis took %d seconds", elapsedTime));
     }
 }

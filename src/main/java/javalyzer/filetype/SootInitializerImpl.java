@@ -25,6 +25,7 @@ package javalyzer.filetype;
  */
 
 import javalyzer.utils.Environment;
+import javalyzer.utils.Writer;
 import org.apache.tika.Tika;
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public abstract class SootInitializerImpl implements SootInitializer {
                 Environment.v().setFileType(this.getFileType());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Writer.v().perror(e.getMessage());
             return false;
         }
 

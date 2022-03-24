@@ -88,7 +88,7 @@ public class CommandLineOptions {
             }
             this.cmdLine = this.parser.parse(this.options, args);
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            Writer.v().perror(e.getMessage());
             System.exit(1);
         }
     }

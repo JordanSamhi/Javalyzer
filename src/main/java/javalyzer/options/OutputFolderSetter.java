@@ -27,6 +27,7 @@ package javalyzer.options;
 import javalyzer.utils.CommandLineOptions;
 import javalyzer.utils.Constants;
 import javalyzer.utils.Environment;
+import javalyzer.utils.Writer;
 import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 
@@ -50,11 +51,11 @@ public class OutputFolderSetter extends EnvironmentConstructorImpl {
                 }
                 f = new File(outputFolder);
                 if (!f.exists()) {
-                    System.err.println("Output folder does not exist");
+                    Writer.v().perror("Output folder does not exist");
                     System.exit(1);
                 }
                 if (!f.canWrite()) {
-                    System.err.println("Cannot write in output folder");
+                    Writer.v().perror("Cannot write in output folder");
                     System.exit(1);
                 }
             }
