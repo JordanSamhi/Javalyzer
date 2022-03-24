@@ -71,7 +71,9 @@ public class CallGraphExtractor extends AbstractExtractor {
                 adjacencyList.put(srcSig, new ArrayList<>());
             }
             tgts = adjacencyList.get(srcSig);
-            tgts.add(tgtSig);
+            if (!tgts.contains(tgtSig)) {
+                tgts.add(tgtSig);
+            }
         }
         return true;
     }
@@ -98,7 +100,7 @@ public class CallGraphExtractor extends AbstractExtractor {
         JSONObject joEntry;
         for (Map.Entry<String, List<String>> e : this.adjacencyList.entrySet()) {
             jaTgts = new JSONArray();
-            for (String s: e.getValue()) {
+            for (String s : e.getValue()) {
                 jaTgts.put(s);
             }
             joEntry = new JSONObject();
