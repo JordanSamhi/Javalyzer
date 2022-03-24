@@ -2,6 +2,8 @@
 
 Tool based on Soot to extract different structures from JAVA programs and Android apps.
 
+⚠️ Works better with Java 8
+
 ## Getting started
 
 ### Downloading the tool
