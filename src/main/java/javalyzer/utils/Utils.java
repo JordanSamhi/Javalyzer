@@ -24,5 +24,29 @@ package javalyzer.utils;
  * #L%
  */
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Utils {
+
+    public static boolean isRtJar(Path p) {
+        return p.getFileName().toString().equals("rt.jar");
+    }
+
+    public static String getRtJar() {
+        try (Stream<Path> walk = Files.walk(Paths.get(System.getProperty("java.home")))) {
+            List<String> result = walk.filter(Utils::isRtJar).map(Path::toString).collect(Collectors.toList());
+            if (result.size() > 0) {
+                return result.get(0);
+            }
+        } catch (IOException e) {
+            Writer.v().perror(e.getMessage());
+        }
+        return null;
+    }
 }

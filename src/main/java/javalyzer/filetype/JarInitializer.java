@@ -26,6 +26,7 @@ package javalyzer.filetype;
 
 import javalyzer.utils.Constants;
 import javalyzer.utils.Environment;
+import javalyzer.utils.Utils;
 import soot.G;
 import soot.Scene;
 import soot.options.Options;
@@ -75,7 +76,7 @@ public class JarInitializer extends SootInitializerImpl {
         Options.v().set_include(includeList);
         Options.v().set_output_format(Options.output_format_none);
         Options.v().set_src_prec(Options.src_prec_java);
-        Options.v().set_soot_classpath(System.getProperty("java.class.path"));
+        Options.v().set_soot_classpath(Utils.getRtJar());
         List<String> dirs = new ArrayList<>();
         dirs.add(f.getAbsolutePath());
         Options.v().set_process_dir(dirs);
