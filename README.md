@@ -18,7 +18,7 @@ mvn clean install
 </pre>
 
 <pre>
-java -jar Javalyzer-0.1-jar-with-dependencies.jar <i>options</i>
+java -jar target/Javalyzer-0.1-jar-with-dependencies.jar <i>options</i>
 </pre>
 
 Options:
