@@ -39,13 +39,15 @@ public class CallGraphExtractor extends AbstractExtractor {
 
     private final Map<String, List<String>> adjacencyList;
     private final CallGraph cg;
-    List<SootMethod> vertices;
+    private List<SootMethod> vertices;
+    private int numEdges;
 
     public CallGraphExtractor() {
         super();
         this.adjacencyList = new HashMap<>();
         this.cg = Scene.v().getCallGraph();
         this.vertices = new ArrayList<>();
+        this.numEdges = 0;
     }
 
     @Override
@@ -73,6 +75,7 @@ public class CallGraphExtractor extends AbstractExtractor {
             tgts = adjacencyList.get(srcSig);
             if (!tgts.contains(tgtSig)) {
                 tgts.add(tgtSig);
+                this.numEdges += 1;
             }
         }
         return true;
@@ -88,7 +91,7 @@ public class CallGraphExtractor extends AbstractExtractor {
         JSONObject jsonCallGraph = new JSONObject();
         JSONArray ja = new JSONArray();
         JSONObject algo = new JSONObject().put("Algorithm", Environment.v().getCgAlgo());
-        JSONObject NumEdges = new JSONObject().put("NumEdges", this.cg.size());
+        JSONObject NumEdges = new JSONObject().put("NumEdges", this.numEdges);
         JSONObject NumVertices = new JSONObject().put("NumVertices", this.vertices.size());
         JSONArray eps = new JSONArray();
         for (SootMethod sm : Scene.v().getEntryPoints()) {
