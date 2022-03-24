@@ -42,8 +42,8 @@ public class CommandLineOptions {
 
     private static final Triplet<String, String, String> INPUT = new Triplet<>("input", "i", "Input file to analyze");
     private static final Triplet<String, String, String> HELP = new Triplet<>("help", "h", "Print this message");
-    private static final Triplet<String, String, String> CG = new Triplet<>("callgraph", "cg", "Extract Call Graph");
-    private static final Triplet<String, String, String> FORMAT = new Triplet<>("format", "f", "Set output format");
+    private static final Triplet<String, String, String> CG = new Triplet<>("callgraph", "cg", "Extract Call Graph (CHA, RTA, VTA, SPARK)");
+    private static final Triplet<String, String, String> FORMAT = new Triplet<>("format", "f", "Set output format (JSON, YAML)");
     private static final Triplet<String, String, String> OUTPUT = new Triplet<>("output", "o", "Set output folder");
 
     private final Options options;
