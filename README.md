@@ -19,6 +19,18 @@ cd Javalyzer
 mvn clean install
 </pre>
 
+### Issues
+
+If you stumble upon a stack overflow error while building AndroBomb, increase memory available with this command:
+
+<pre>
+export MAVEN_OPTS=-Xss32m
+</pre>
+
+Then, try to rebuild.
+
+### Running
+
 <pre>
 java -jar target/Javalyzer-0.1-jar-with-dependencies.jar <i>options</i>
 </pre>
