@@ -40,7 +40,7 @@ import org.javatuples.Triplet;
  */
 public class CommandLineOptions {
 
-    private static final Triplet<String, String, String> INPUT = new Triplet<>("input", "i", "File to analyze");
+    private static final Triplet<String, String, String> INPUT = new Triplet<>("input", "i", "Input file to analyze");
     private static final Triplet<String, String, String> HELP = new Triplet<>("help", "h", "Print this message");
     private static final Triplet<String, String, String> CG = new Triplet<>("callgraph", "cg", "Extract Call Graph");
     private static final Triplet<String, String, String> FORMAT = new Triplet<>("format", "f", "Set output format");
