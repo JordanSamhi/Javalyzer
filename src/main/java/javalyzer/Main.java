@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        Writer.v().pinfo(String.format("%s v%s started on %s", Constants.TOOL_NAME, Constants.VERSION, new Date()));
+        Writer.v().pinfo(String.format("%s v%s started on %s\n", Constants.TOOL_NAME, Constants.VERSION, new Date()));
         StopWatch stopWatch = new StopWatch(Constants.TOOL_NAME);
         stopWatch.start(Constants.TOOL_NAME);
 
