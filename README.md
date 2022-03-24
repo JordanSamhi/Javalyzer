@@ -37,9 +37,9 @@ java -jar target/Javalyzer-0.1-jar-with-dependencies.jar <i>options</i>
 
 Options:
 
-* ```-i``` : Input file to analyze
-* ```-cg``` : Extract Call Graph
-* ```-f``` : Set output format
+* ```-i``` : Input file to analyze (JAR and APK file supported)
+* ```-cg``` : Extract Call Graph (CHA, RTA, VTA, SPARK)
+* ```-f``` : Set output format (JSON, YAML)
 * ```-o``` : Set output folder
 * ```-h``` : Print help message
 
