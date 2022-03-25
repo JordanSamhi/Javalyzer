@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Utils {
+    public static String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
 
     public static boolean isRtJar(Path p) {
         return p.getFileName().toString().equals("rt.jar");
@@ -48,5 +49,14 @@ public class Utils {
             Writer.v().perror(e.getMessage());
         }
         return null;
+    }
+
+    public static String getRandomString(int n) {
+        StringBuilder sb = new StringBuilder(n);
+        for (int i = 0; i < n; i++) {
+            int index = (int) (alphaNumeric.length() * Math.random());
+            sb.append(alphaNumeric.charAt(index));
+        }
+        return sb.toString();
     }
 }
