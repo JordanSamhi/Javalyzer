@@ -51,4 +51,9 @@ public class Constants {
 	 * File names
 	 */
 	public static final String CALLGRAPH_OUTPUT = "callgraph";
+
+	/**
+	 * Method signatures
+	 */
+	public static final String MAIN_METHOD = "void main(java.lang.String[])";
 }

@@ -30,10 +30,10 @@ import org.apache.tika.Tika;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class SootInitializerImpl implements SootInitializer {
-    private final SootInitializerImpl next;
+public abstract class AbstractSootInitializer implements SootInitializer {
+    private final AbstractSootInitializer next;
 
-    public SootInitializerImpl(SootInitializerImpl next) {
+    public AbstractSootInitializer(AbstractSootInitializer next) {
         this.next = next;
     }
 

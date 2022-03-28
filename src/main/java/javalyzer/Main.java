@@ -28,8 +28,8 @@ import javalyzer.extractors.AbstractExtractor;
 import javalyzer.extractors.listbuilders.CGExtractorBuilder;
 import javalyzer.extractors.listbuilders.ExtractorListBuilder;
 import javalyzer.filetype.JarInitializer;
-import javalyzer.filetype.JavaInitializer;
-import javalyzer.filetype.SootInitializerImpl;
+import javalyzer.filetype.JavaSourceInitializer;
+import javalyzer.filetype.AbstractSootInitializer;
 import javalyzer.options.CallGraphSetter;
 import javalyzer.options.EnvironmentConstructorImpl;
 import javalyzer.options.OutputFolderSetter;
@@ -55,6 +55,11 @@ public class Main {
 
         CommandLineOptions.v().parseArgs(args);
         String input = CommandLineOptions.v().getInput();
+        File finput = new File(input);
+        if(!finput.exists()) {
+            Writer.v().perror("File does not exist");
+            System.exit(1);
+        }
 
         // Set environment
         EnvironmentConstructorImpl ec = new CallGraphSetter(null);
@@ -66,9 +71,9 @@ public class Main {
         final Loading l = new Loading();
         l.start();
         l.load("Initializing the environment");
-        SootInitializerImpl si = new JarInitializer(null);
-        si = new JavaInitializer(si);
-        boolean recognized = si.recognizeFileType(new File(input));
+        AbstractSootInitializer si = new JarInitializer(null);
+        si = new JavaSourceInitializer(si);
+        boolean recognized = si.recognizeFileType(finput);
         l.kill(recognized);
         if (!recognized) {
             Writer.v().perror("Input file not recognized");

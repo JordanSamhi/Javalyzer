@@ -25,61 +25,23 @@ package javalyzer.filetype;
  */
 
 import javalyzer.utils.Constants;
-import javalyzer.utils.Environment;
-import javalyzer.utils.Utils;
-import soot.G;
-import soot.Scene;
 import soot.options.Options;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class JarInitializer extends SootInitializerImpl {
+public class JarInitializer extends AbstractSootJavaInitializer {
 
-    public JarInitializer(SootInitializerImpl next) {
+    public JarInitializer(AbstractSootInitializer next) {
         super(next);
     }
 
     @Override
-    public void initializeSoot(File f) {
-        G.reset();
-        if(Environment.v().isHasCG()) {
-            Options.v().set_whole_program(true);
-            Options.v().setPhaseOption("cg", "enabled:true");
-            Options.v().setPhaseOption(String.format("cg.%s", Environment.v().getCgAlgo()), "enabled:true");
-        } else {
-            Options.v().set_whole_program(false);
-            Options.v().setPhaseOption("cg", "enabled:false");
-        }
-        Options.v().setPhaseOption("wjop", "enabled:false");
-        Options.v().setPhaseOption("wjap", "enabled:false");
-        List<String> includeList = new LinkedList<>();
-        includeList.add("java.lang.*");
-        includeList.add("javax.management.*");
-        includeList.add("java.util.*");
-        includeList.add("javax.xml.*");
-        includeList.add("java.io.*");
-        includeList.add("sun.*");
-        includeList.add("com.sun.*");
-        includeList.add("java.net.*");
-        includeList.add("javax.servlet.*");
-        includeList.add("javax.crypto.*");
-        includeList.add("org.apache.*");
-        includeList.add("de.test.*");
-        includeList.add("soot.*");
-        includeList.add("com.example.*");
-        includeList.add("libcore.icu.*");
-        includeList.add("securibench.*");
-        Options.v().set_allow_phantom_refs(true);
-        Options.v().set_include(includeList);
-        Options.v().set_output_format(Options.output_format_none);
-        Options.v().set_soot_classpath(Utils.getRtJar());
+    public void specificInitialization(File f) {
         List<String> dirs = new ArrayList<>();
         dirs.add(f.getAbsolutePath());
         Options.v().set_process_dir(dirs);
-        Scene.v().loadNecessaryClasses();
     }
 
     @Override
