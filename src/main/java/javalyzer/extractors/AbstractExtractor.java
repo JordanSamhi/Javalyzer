@@ -49,7 +49,7 @@ public abstract class AbstractExtractor implements Extractor {
         this.l.start();
         this.l.load(this.getMessage());
         boolean b = this.process();
-        l.kill(true);
+        l.kill(b);
         l.load(String.format("Writing %s/%s.%s", Environment.v().getOutputFolder(),
                 this.getOutputFileName(), Environment.v().getOutputFormat()));
         this.write();
