@@ -39,7 +39,7 @@ public class CallGraphExtractor extends AbstractExtractor {
 
     private final Map<String, List<String>> adjacencyList;
     private final CallGraph cg;
-    private List<SootMethod> vertices;
+    private final List<SootMethod> vertices;
     private int numEdges;
 
     public CallGraphExtractor() {
@@ -82,12 +82,12 @@ public class CallGraphExtractor extends AbstractExtractor {
     }
 
     @Override
-    protected String getYaml() {
+    public String getYaml() {
         return null;
     }
 
     @Override
-    protected String getJson() {
+    public String getJson() {
         JSONObject jsonCallGraph = new JSONObject();
         JSONArray ja = new JSONArray();
         JSONObject algo = new JSONObject().put("Algorithm", Environment.v().getCgAlgo());

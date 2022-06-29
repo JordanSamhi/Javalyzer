@@ -76,7 +76,4 @@ public abstract class AbstractExtractor implements Extractor {
             Writer.v().perror(e.getMessage());
         }
     }
-
-    protected abstract String getYaml();
-    protected abstract String getJson();
 }

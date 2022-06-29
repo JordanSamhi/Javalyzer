@@ -32,4 +32,8 @@ public interface Extractor {
     void write();
 
     String getOutputFileName();
+
+    String getYaml();
+
+    String getJson();
 }
