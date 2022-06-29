@@ -16,18 +16,8 @@ git clone https://github.com/JordanSamhi/Javalyzer.git
 
 <pre>
 cd Javalyzer
-mvn clean install
+sh build.sh
 </pre>
-
-### Issues
-
-If you stumble upon a stack overflow error while building AndroBomb, increase memory available with this command:
-
-<pre>
-export MAVEN_OPTS=-Xss32m
-</pre>
-
-Then, try to rebuild.
 
 ### Running
 
