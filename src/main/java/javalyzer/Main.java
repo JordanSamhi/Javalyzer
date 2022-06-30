@@ -28,7 +28,6 @@ import javalyzer.extractors.AbstractExtractor;
 import javalyzer.extractors.listbuilders.CGExtractorBuilder;
 import javalyzer.extractors.listbuilders.ExtractorListBuilder;
 import javalyzer.filetype.JarInitializer;
-import javalyzer.filetype.JavaSourceInitializer;
 import javalyzer.filetype.AbstractSootInitializer;
 import javalyzer.options.CallGraphSetter;
 import javalyzer.options.EnvironmentConstructorImpl;
@@ -72,7 +71,6 @@ public class Main {
         l.start();
         l.load("Initializing the environment");
         AbstractSootInitializer si = new JarInitializer(null);
-        si = new JavaSourceInitializer(si);
         boolean recognized = si.recognizeFileType(finput);
         l.kill(recognized);
         if (!recognized) {

@@ -25,13 +25,16 @@ package javalyzer.filetype;
  */
 
 import javalyzer.utils.Constants;
+import javalyzer.utils.Utils;
+import soot.Scene;
+import soot.SootMethod;
 import soot.options.Options;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JarInitializer extends AbstractSootJavaInitializer {
+public class JarInitializer extends AbstractSootInitializer {
 
     public JarInitializer(AbstractSootInitializer next) {
         super(next);
@@ -42,6 +45,7 @@ public class JarInitializer extends AbstractSootJavaInitializer {
         List<String> dirs = new ArrayList<>();
         dirs.add(f.getAbsolutePath());
         Options.v().set_process_dir(dirs);
+        Options.v().set_soot_classpath(Utils.getRtJar());
     }
 
     @Override
@@ -52,5 +56,18 @@ public class JarInitializer extends AbstractSootJavaInitializer {
     @Override
     public String getFileType() {
         return Constants.JAR;
+    }
+
+    @Override
+    public void setEntryPoints() {
+        List<SootMethod> entryPoints = Scene.v().getEntryPoints();
+        List<SootMethod> eps = new ArrayList<>();
+        for (SootMethod ep : entryPoints) {
+            if (ep.isPublic() && ep.isStatic() && ep.getSubSignature().equals(Constants.MAIN_METHOD)) {
+                eps.add(ep);
+            }
+        }
+        entryPoints.clear();
+        entryPoints.addAll(eps);
     }
 }
