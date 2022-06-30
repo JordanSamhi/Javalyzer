@@ -24,31 +24,15 @@ package javalyzer.utils;
  * #L%
  */
 
-import java.io.IOException;
-import java.nio.file.Files;
+import soot.jimple.infoflow.InfoflowConfiguration;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Utils {
     public static String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
 
     public static boolean isRtJar(Path p) {
         return p.getFileName().toString().equals("rt.jar");
-    }
-
-    public static String getRtJar() {
-        try (Stream<Path> walk = Files.walk(Paths.get(System.getProperty("java.home")))) {
-            List<String> result = walk.filter(Utils::isRtJar).map(Path::toString).collect(Collectors.toList());
-            if (result.size() > 0) {
-                return result.get(0);
-            }
-        } catch (IOException e) {
-            Writer.v().perror(e.getMessage());
-        }
-        return null;
     }
 
     public static String getRandomString(int n) {
@@ -58,5 +42,18 @@ public class Utils {
             sb.append(alphaNumeric.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static InfoflowConfiguration.CallgraphAlgorithm getCGAlgo(String s) {
+        switch (s) {
+            case Constants.RTA:
+                return InfoflowConfiguration.CallgraphAlgorithm.RTA;
+            case Constants.VTA:
+                return InfoflowConfiguration.CallgraphAlgorithm.VTA;
+            case Constants.SPARK:
+                return InfoflowConfiguration.CallgraphAlgorithm.SPARK;
+            default:
+                return InfoflowConfiguration.CallgraphAlgorithm.CHA;
+        }
     }
 }

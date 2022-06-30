@@ -27,16 +27,11 @@ package javalyzer;
 import javalyzer.extractors.AbstractExtractor;
 import javalyzer.extractors.listbuilders.CGExtractorBuilder;
 import javalyzer.extractors.listbuilders.ExtractorListBuilder;
+import javalyzer.filetype.ApkInitializer;
 import javalyzer.filetype.JarInitializer;
 import javalyzer.filetype.AbstractSootInitializer;
-import javalyzer.options.CallGraphSetter;
-import javalyzer.options.EnvironmentConstructorImpl;
-import javalyzer.options.OutputFolderSetter;
-import javalyzer.options.OutputFormatSetter;
-import javalyzer.utils.CommandLineOptions;
-import javalyzer.utils.Constants;
-import javalyzer.utils.Loading;
-import javalyzer.utils.Writer;
+import javalyzer.options.*;
+import javalyzer.utils.*;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.profiler.StopWatch;
 import soot.PackManager;
@@ -64,6 +59,7 @@ public class Main {
         EnvironmentConstructorImpl ec = new CallGraphSetter(null);
         ec = new OutputFormatSetter(ec);
         ec = new OutputFolderSetter(ec);
+        ec = new AndroidPlatformSetter(ec);
         ec.exploreOptions();
 
         // Initialize Soot
@@ -71,6 +67,7 @@ public class Main {
         l.start();
         l.load("Initializing the environment");
         AbstractSootInitializer si = new JarInitializer(null);
+        si = new ApkInitializer(si);
         boolean recognized = si.recognizeFileType(finput);
         l.kill(recognized);
         if (!recognized) {

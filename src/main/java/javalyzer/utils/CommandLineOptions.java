@@ -45,6 +45,7 @@ public class CommandLineOptions {
     private static final Triplet<String, String, String> CG = new Triplet<>("callgraph", "cg", "Extract Call Graph (CHA, RTA, VTA, SPARK)");
     private static final Triplet<String, String, String> FORMAT = new Triplet<>("format", "f", "Set output format (JSON, YAML)");
     private static final Triplet<String, String, String> OUTPUT = new Triplet<>("output", "o", "Set output folder");
+    private static final Triplet<String, String, String> PLATFORM = new Triplet<>("platforms", "p", "Set platforms for Android apps");
 
     private final Options options;
     private final Options firstOptions;
@@ -132,6 +133,15 @@ public class CommandLineOptions {
                 .required(false)
                 .build();
 
+        final Option platform = Option.builder(PLATFORM.getValue1())
+                .longOpt(PLATFORM.getValue0())
+                .desc(PLATFORM.getValue2())
+                .hasArg(true)
+                .optionalArg(false)
+                .argName(PLATFORM.getValue0())
+                .required(false)
+                .build();
+
         final Option help = Option.builder(HELP.getValue1())
                 .longOpt(HELP.getValue0())
                 .desc(HELP.getValue2())
@@ -143,6 +153,7 @@ public class CommandLineOptions {
         this.options.addOption(input);
         this.options.addOption(cg);
         this.options.addOption(output);
+        this.options.addOption(platform);
         this.options.addOption(format);
 
         for (Option o : this.firstOptions.getOptions()) {
@@ -176,5 +187,13 @@ public class CommandLineOptions {
 
     public String getOutput() {
         return this.cmdLine.getOptionValue(OUTPUT.getValue0());
+    }
+
+    public boolean hasPlatform() {
+        return this.cmdLine.hasOption(PLATFORM.getValue1());
+    }
+
+    public String getPlatform() {
+        return this.cmdLine.getOptionValue(PLATFORM.getValue0());
     }
 }

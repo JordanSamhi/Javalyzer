@@ -24,6 +24,14 @@ package javalyzer.utils;
  * #L%
  */
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Environment {
 
     private static Environment instance;
@@ -33,8 +41,21 @@ public class Environment {
     private boolean wholeProgramAnalysis;
     private String outputFolder;
     private String outputFormat;
+    private String rtJarPath;
 
-    public Environment() {}
+    public String getPlatformPath() {
+        return platformPath;
+    }
+
+    public void setPlatformPath(String platformPath) {
+        this.platformPath = platformPath;
+    }
+
+    private String platformPath;
+
+    public Environment() {
+        this.getRtJar();
+    }
 
     public static Environment v() {
         if (instance == null) {
@@ -89,5 +110,26 @@ public class Environment {
 
     public void setOutputFormat(String outputFormat) {
         this.outputFormat = outputFormat;
+    }
+
+    public String getRtJarPath() {
+        return rtJarPath;
+    }
+
+    private void getRtJar() {
+        try (Stream<Path> walk = Files.walk(Paths.get(System.getProperty("java.home")))) {
+            List<String> result = walk.filter(Utils::isRtJar).map(Path::toString).collect(Collectors.toList());
+            if (result.size() > 0) {
+                this.rtJarPath = result.get(0);
+                return;
+            }
+        } catch (IOException e) {
+            Writer.v().perror(e.getMessage());
+        }
+        this.rtJarPath = null;
+    }
+
+    public boolean hasPlatform() {
+        return this.platformPath != null;
     }
 }

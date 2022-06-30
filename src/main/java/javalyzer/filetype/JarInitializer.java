@@ -25,7 +25,8 @@ package javalyzer.filetype;
  */
 
 import javalyzer.utils.Constants;
-import javalyzer.utils.Utils;
+import javalyzer.utils.Environment;
+import soot.G;
 import soot.Scene;
 import soot.SootMethod;
 import soot.options.Options;
@@ -41,11 +42,26 @@ public class JarInitializer extends AbstractSootInitializer {
     }
 
     @Override
-    public void specificInitialization(File f) {
+    public void initializeSoot(File f) {
+        G.reset();
+        Options.v().setPhaseOption("wjop", "enabled:false");
+        Options.v().setPhaseOption("wjap", "enabled:false");
+        Options.v().set_allow_phantom_refs(true);
+        Options.v().set_output_format(Options.output_format_none);
+        if (Environment.v().isHasCG()) {
+            Options.v().set_whole_program(true);
+            Options.v().setPhaseOption("cg", "enabled:true");
+            Options.v().setPhaseOption(String.format("cg.%s", Environment.v().getCgAlgo()), "enabled:true");
+        } else {
+            Options.v().set_whole_program(false);
+            Options.v().setPhaseOption("cg", "enabled:false");
+        }
         List<String> dirs = new ArrayList<>();
         dirs.add(f.getAbsolutePath());
         Options.v().set_process_dir(dirs);
-        Options.v().set_soot_classpath(Utils.getRtJar());
+        Options.v().set_soot_classpath(Environment.v().getRtJarPath());
+        Scene.v().loadNecessaryClasses();
+        this.setEntryPoints();
     }
 
     @Override
@@ -58,7 +74,6 @@ public class JarInitializer extends AbstractSootInitializer {
         return Constants.JAR;
     }
 
-    @Override
     public void setEntryPoints() {
         List<SootMethod> entryPoints = Scene.v().getEntryPoints();
         List<SootMethod> eps = new ArrayList<>();

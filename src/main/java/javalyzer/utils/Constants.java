@@ -43,9 +43,9 @@ public class Constants {
 	 * File types
 	 */
 	public static final String JAR_TYPE = "application/java-archive";
-	public static final String JAVA_SOURCE_TYPE = "text/x-java-source";
+	public static final String APK_TYPE = "application/vnd.android.package-archive";
 	public static final String JAR = "jar";
-	public static final String JAVA = "java";
+	public static final String APK = "apk";
 
 	/**
 	 * File names
