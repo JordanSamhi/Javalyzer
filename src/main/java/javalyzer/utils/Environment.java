@@ -24,10 +24,13 @@ package javalyzer.utils;
  * #L%
  */
 
+import soot.SootMethod;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,6 +45,16 @@ public class Environment {
     private String outputFolder;
     private String outputFormat;
     private String rtJarPath;
+    private boolean hasCFG;
+    private List<SootMethod> methodToExtractCFG;
+
+    public boolean isHasCFG() {
+        return hasCFG;
+    }
+
+    public void setHasCFG(boolean hasCFG) {
+        this.hasCFG = hasCFG;
+    }
 
     public String getPlatformPath() {
         return platformPath;
@@ -55,6 +68,7 @@ public class Environment {
 
     public Environment() {
         this.getRtJar();
+        this.methodToExtractCFG = new ArrayList<>();
     }
 
     public static Environment v() {
@@ -131,5 +145,9 @@ public class Environment {
 
     public boolean hasPlatform() {
         return this.platformPath != null;
+    }
+
+    public void addMethodToExtractCFG(SootMethod sm) {
+        this.methodToExtractCFG.add(sm);
     }
 }

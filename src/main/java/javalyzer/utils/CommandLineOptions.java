@@ -43,6 +43,9 @@ public class CommandLineOptions {
     private static final Triplet<String, String, String> INPUT = new Triplet<>("input", "i", "Input file to analyze");
     private static final Triplet<String, String, String> HELP = new Triplet<>("help", "h", "Print this message");
     private static final Triplet<String, String, String> CG = new Triplet<>("callgraph", "cg", "Extract Call Graph (CHA, RTA, VTA, SPARK)");
+    private static final Triplet<String, String, String> CFG = new Triplet<>("controlflowgraph", "cfg", "Extract Control Flow Graph(s)" +
+            "Single -> class_name:method_name ; Multiple -> class_name:method_name|...|class_name:method_name" +
+            "All -> ALL");
     private static final Triplet<String, String, String> FORMAT = new Triplet<>("format", "f", "Set output format (JSON, YAML)");
     private static final Triplet<String, String, String> OUTPUT = new Triplet<>("output", "o", "Set output folder");
     private static final Triplet<String, String, String> PLATFORM = new Triplet<>("platforms", "p", "Set platforms for Android apps");
@@ -115,6 +118,15 @@ public class CommandLineOptions {
                 .required(false)
                 .build();
 
+        final Option cfg = Option.builder(CFG.getValue1())
+                .longOpt(CFG.getValue0())
+                .desc(CFG.getValue2())
+                .hasArg(true)
+                .optionalArg(false)
+                .argName(CFG.getValue0())
+                .required(false)
+                .build();
+
         final Option format = Option.builder(FORMAT.getValue1())
                 .longOpt(FORMAT.getValue0())
                 .desc(FORMAT.getValue2())
@@ -155,6 +167,7 @@ public class CommandLineOptions {
         this.options.addOption(output);
         this.options.addOption(platform);
         this.options.addOption(format);
+        this.options.addOption(cfg);
 
         for (Option o : this.firstOptions.getOptions()) {
             this.options.addOption(o);
@@ -195,5 +208,13 @@ public class CommandLineOptions {
 
     public String getPlatform() {
         return this.cmdLine.getOptionValue(PLATFORM.getValue0());
+    }
+
+    public boolean hasCFG() {
+        return this.cmdLine.hasOption(CFG.getValue1());
+    }
+
+    public String getCFG() {
+        return this.cmdLine.getOptionValue(CFG.getValue0());
     }
 }

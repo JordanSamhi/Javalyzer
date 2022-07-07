@@ -24,24 +24,15 @@ package javalyzer.utils;
  * #L%
  */
 
+import soot.SootClass;
 import soot.jimple.infoflow.InfoflowConfiguration;
 
 import java.nio.file.Path;
 
 public class Utils {
-    public static String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789";
 
     public static boolean isRtJar(Path p) {
         return p.getFileName().toString().equals("rt.jar");
-    }
-
-    public static String getRandomString(int n) {
-        StringBuilder sb = new StringBuilder(n);
-        for (int i = 0; i < n; i++) {
-            int index = (int) (alphaNumeric.length() * Math.random());
-            sb.append(alphaNumeric.charAt(index));
-        }
-        return sb.toString();
     }
 
     public static InfoflowConfiguration.CallgraphAlgorithm getCGAlgo(String s) {
@@ -55,5 +46,13 @@ public class Utils {
             default:
                 return InfoflowConfiguration.CallgraphAlgorithm.CHA;
         }
+    }
+
+    public static boolean isSystemClass(SootClass clazz) {
+        String className = clazz.getName();
+        return (className.startsWith("android.") || className.startsWith("java.") || className.startsWith("javax.")
+                || className.startsWith("sun.") || className.startsWith("org.omg.")
+                || className.startsWith("org.w3c.dom.") || className.startsWith("com.google.")
+                || className.startsWith("com.android.") || className.startsWith("androidx."));
     }
 }

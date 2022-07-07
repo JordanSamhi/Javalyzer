@@ -25,35 +25,41 @@ package javalyzer.utils;
  */
 
 public class Constants {
-	
-	/**
-	 * Misc names
-	 */
-	public static final String TOOL_NAME = "Javalyzer";
-	public static final String VERSION = "0.1";
-	public static final String CHA = "cha";
-	public static final String RTA = "rta";
-	public static final String VTA = "vta";
-	public static final String SPARK = "spark";
-	public static final String JSON = "json";
-	public static final String YAML = "yaml";
-	public static final String CURRENT_FOLDER = "./";
 
-	/**
-	 * File types
-	 */
-	public static final String JAR_TYPE = "application/java-archive";
-	public static final String APK_TYPE = "application/vnd.android.package-archive";
-	public static final String JAR = "jar";
-	public static final String APK = "apk";
+    /**
+     * Misc names
+     */
+    public static final String TOOL_NAME = "Javalyzer";
+    public static final String VERSION = "0.1";
+    public static final String CHA = "cha";
+    public static final String RTA = "rta";
+    public static final String VTA = "vta";
+    public static final String SPARK = "spark";
+    public static final String JSON = "json";
+    public static final String YAML = "yaml";
+    public static final String CURRENT_FOLDER = "./";
+    public static final String ALL = "ALL";
 
-	/**
-	 * File names
-	 */
-	public static final String CALLGRAPH_OUTPUT = "callgraph";
+    /**
+     * File types
+     */
+    public static final String JAR_TYPE = "application/java-archive";
+    public static final String APK_TYPE = "application/vnd.android.package-archive";
+    public static final String JAR = "jar";
+    public static final String APK = "apk";
 
-	/**
-	 * Method signatures
-	 */
-	public static final String MAIN_METHOD = "void main(java.lang.String[])";
+    /**
+     * File names
+     */
+    public static final String CALLGRAPH_OUTPUT = "callgraph";
+
+    /**
+     * Method signatures
+     */
+    public static final String MAIN_METHOD = "void main(java.lang.String[])";
+
+    /**
+     * Files
+     */
+    public static final String LIBRARIES_FILE = "/libraries.txt";
 }

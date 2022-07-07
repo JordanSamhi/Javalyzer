@@ -25,13 +25,17 @@ package javalyzer;
  */
 
 import javalyzer.extractors.AbstractExtractor;
+import javalyzer.extractors.listbuilders.CFGExtractorBuilder;
 import javalyzer.extractors.listbuilders.CGExtractorBuilder;
-import javalyzer.extractors.listbuilders.ExtractorListBuilder;
+import javalyzer.extractors.listbuilders.ExtractorListBuilderImpl;
+import javalyzer.filetype.AbstractSootInitializer;
 import javalyzer.filetype.ApkInitializer;
 import javalyzer.filetype.JarInitializer;
-import javalyzer.filetype.AbstractSootInitializer;
 import javalyzer.options.*;
-import javalyzer.utils.*;
+import javalyzer.utils.CommandLineOptions;
+import javalyzer.utils.Constants;
+import javalyzer.utils.Loading;
+import javalyzer.utils.Writer;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.profiler.StopWatch;
 import soot.PackManager;
@@ -50,7 +54,7 @@ public class Main {
         CommandLineOptions.v().parseArgs(args);
         String input = CommandLineOptions.v().getInput();
         File finput = new File(input);
-        if(!finput.exists()) {
+        if (!finput.exists()) {
             Writer.v().perror("File does not exist");
             System.exit(1);
         }
@@ -60,6 +64,7 @@ public class Main {
         ec = new OutputFormatSetter(ec);
         ec = new OutputFolderSetter(ec);
         ec = new AndroidPlatformSetter(ec);
+        ec = new ControlFlowGraphSetter(ec);
         ec.exploreOptions();
 
         // Initialize Soot
@@ -82,9 +87,13 @@ public class Main {
 
         // Extractors based on options
         l.load("Loading extractors");
-        ExtractorListBuilder elb = new CGExtractorBuilder(null);
+        ExtractorListBuilderImpl elb = new CGExtractorBuilder(null);
+        elb = new CFGExtractorBuilder(elb);
         List<AbstractExtractor> extractors = elb.recognizeOptions();
         l.kill(true);
+        if (extractors.size() == 0) {
+            Writer.v().pinfo("Noting to do");
+        }
         for (AbstractExtractor ae : extractors) {
             ae.extract();
         }
