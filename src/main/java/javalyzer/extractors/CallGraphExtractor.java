@@ -82,11 +82,6 @@ public class CallGraphExtractor extends AbstractExtractor {
     }
 
     @Override
-    public String getYaml() {
-        return null;
-    }
-
-    @Override
     public String getJson() {
         JSONObject jsonCallGraph = new JSONObject();
         JSONArray ja = new JSONArray();

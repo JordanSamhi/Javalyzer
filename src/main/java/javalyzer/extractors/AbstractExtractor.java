@@ -24,6 +24,10 @@ package javalyzer.extractors;
  * #L%
  */
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import javalyzer.utils.Constants;
 import javalyzer.utils.Environment;
 import javalyzer.utils.Loading;
@@ -61,7 +65,7 @@ public abstract class AbstractExtractor implements Extractor {
     @Override
     public void write() {
         String content;
-        if(Environment.v().getOutputFormat().equals(Constants.YAML)) {
+        if (Environment.v().getOutputFormat().equals(Constants.YAML)) {
             content = this.getYaml();
         } else {
             content = this.getJson();
@@ -75,5 +79,19 @@ public abstract class AbstractExtractor implements Extractor {
         } catch (IOException e) {
             Writer.v().perror(e.getMessage());
         }
+    }
+
+    public String getYaml() {
+        String json = this.getJson();
+        String jsonAsYaml = null;
+
+        try {
+            JsonNode jsonNodeTree = new ObjectMapper().readTree(json);
+            jsonAsYaml = new YAMLMapper().writeValueAsString(jsonNodeTree);
+
+        } catch (JsonProcessingException e) {
+            Writer.v().perror(e.getMessage());
+        }
+        return jsonAsYaml;
     }
 }

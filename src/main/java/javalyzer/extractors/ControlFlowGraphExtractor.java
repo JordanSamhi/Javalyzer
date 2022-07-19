@@ -96,11 +96,6 @@ public class ControlFlowGraphExtractor extends AbstractExtractor {
     }
 
     @Override
-    public String getYaml() {
-        return null;
-    }
-
-    @Override
     public String getJson() {
         JSONObject jsonCFG = new JSONObject();
         JSONArray jaCFG;
