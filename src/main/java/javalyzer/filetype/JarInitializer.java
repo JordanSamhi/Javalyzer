@@ -48,7 +48,7 @@ public class JarInitializer extends AbstractSootInitializer {
         Options.v().setPhaseOption("wjap", "enabled:false");
         Options.v().set_allow_phantom_refs(true);
         Options.v().set_output_format(Options.output_format_none);
-        if (Environment.v().isHasCG()) {
+        if (Environment.v().hasCG()) {
             Options.v().set_whole_program(true);
             Options.v().setPhaseOption("cg", "enabled:true");
             Options.v().setPhaseOption(String.format("cg.%s", Environment.v().getCgAlgo()), "enabled:true");

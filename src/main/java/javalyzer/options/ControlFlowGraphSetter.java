@@ -1,13 +1,8 @@
 package javalyzer.options;
 
-import javalyzer.files.LibrariesManager;
 import javalyzer.utils.CommandLineOptions;
 import javalyzer.utils.Constants;
 import javalyzer.utils.Environment;
-import javalyzer.utils.Utils;
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
 
 public class ControlFlowGraphSetter extends EnvironmentConstructorImpl {
     public ControlFlowGraphSetter(EnvironmentConstructorImpl next) {
@@ -20,15 +15,7 @@ public class ControlFlowGraphSetter extends EnvironmentConstructorImpl {
             Environment.v().setHasCFG(true);
             String arg = CommandLineOptions.v().getCFG();
             if (arg.equals(Constants.ALL)) {
-                for (SootClass sc : Scene.v().getApplicationClasses()) {
-                    if (!Utils.isSystemClass(sc) && !LibrariesManager.v().isLibrary(sc)) {
-                        for (SootMethod sm : sc.getMethods()) {
-                            if (sm.isConcrete()) {
-                                Environment.v().addMethodToExtractCFG(sm);
-                            }
-                        }
-                    }
-                }
+                Environment.v().addMethodToExtractCFG(Constants.ALL, Constants.ALL);
             } else if (arg.contains("|")) {
                 String[] split = arg.split("\\|");
                 for (String s : split) {
@@ -41,34 +28,14 @@ public class ControlFlowGraphSetter extends EnvironmentConstructorImpl {
                     }
                     String clazz = split1[0];
                     String method = split1[1];
-                    for (SootClass sc : Scene.v().getApplicationClasses()) {
-                        if (sc.getName().equals(clazz)) {
-                            for (SootMethod sm : sc.getMethods()) {
-                                if (sm.getName().equals(method)) {
-                                    if (sm.isConcrete()) {
-                                        Environment.v().addMethodToExtractCFG(sm);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Environment.v().addMethodToExtractCFG(clazz, method);
                 }
             } else {
                 String[] split = arg.split(":");
                 if (split.length == 2) {
                     String clazz = split[0];
                     String method = split[1];
-                    for (SootClass sc : Scene.v().getApplicationClasses()) {
-                        if (sc.getName().equals(clazz)) {
-                            for (SootMethod sm : sc.getMethods()) {
-                                if (sm.getName().equals(method)) {
-                                    if (sm.isConcrete()) {
-                                        Environment.v().addMethodToExtractCFG(sm);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Environment.v().addMethodToExtractCFG(clazz, method);
                 }
             }
         }

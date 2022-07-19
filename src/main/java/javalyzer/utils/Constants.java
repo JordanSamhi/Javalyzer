@@ -52,6 +52,7 @@ public class Constants {
      * File names
      */
     public static final String CALLGRAPH_OUTPUT = "callgraph";
+    public static final String CFG_OUTPUT = "controlflowgraph";
 
     /**
      * Method signatures
