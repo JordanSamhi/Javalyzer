@@ -50,7 +50,7 @@ To extract the call graph constructed with another algorithm, e.g., SPARK, use t
 java -jar target/Javalyzer-0.1-jar-with-dependencies.jar -i PATH_TO_APP -o OUTPUT_FOLDER -cg SPARK
 </pre>
 
-Both commands will generate the following file: OUTPUT_FOLDER/callgraph.json
+Both commands will generate the following file: OUTPUT_FOLDER/callgraph.json, or OUTPUT_FOLDER/callgraph.yaml if `-f YAML` is used.
 
 #### Extracting Control Flow Graphs
 
@@ -84,7 +84,7 @@ java -jar target/Javalyzer-0.1-jar-with-dependencies.jar -i PATH_TO_APP -o OUTPU
 </pre>
 
 
-Both commands will generate the following file: OUTPUT_FOLDER/controlflowgraph.json
+Both commands will generate the following file: OUTPUT_FOLDER/controlflowgraph.json, or OUTPUT_FOLDER/controlflowgraph.yaml if `-f YAML` is used.
 
 ## Built With
 
